@@ -30,6 +30,7 @@ jobs:
       - name: Set up terraform CLI
         uses: hashicorp/setup-terraform@v1
         # CoRise TODO: run the format command fail the build or on pull-requests update the PR with formatted data
+  
   terraform:
 
     runs-on: ubuntu-latest

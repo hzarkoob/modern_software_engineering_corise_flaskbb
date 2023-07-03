@@ -1,8 +1,8 @@
 resource "aws_elastic_beanstalk_application" "application" {
-    name = "flaskbb"  
+  name = "hzarkoob_flaskbb"
 }
 # CoRise TODO: change cname_prefix to reflect your unique application name
-# test PR - 2
+# test PR - 3
 resource "aws_elastic_beanstalk_environment" "environment" {
   name                = "flaskbb-environment"
   cname_prefix        = "hzarkoobflaskbb"

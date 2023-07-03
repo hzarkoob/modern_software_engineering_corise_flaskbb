@@ -19,7 +19,7 @@ jobs:
                 name: flaskbb_application_artifact
 
             - name: Congifure AWS Credentials
-              uses: aws-actions/configure-aws-credentials
+              uses: aws-actions/configure-aws-credentials@v2
               with:
                 aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
                 aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
@@ -31,7 +31,7 @@ jobs:
             - name: Create new application version
               run: |  # CoRise TODO filling the name of the aprlication file and the name of the bucket you created
                 aws elasticbeanstalk create-application-version \
-                --application-name hzarkoobflaskbb \
+                --application-name hzarkoob_flaskbb \
                 --source-bundle S3Bucket="hzarkoob-flaskbb",S3Key="flaskbb_deploy-${{github.sha}}.zip" \
                 --version-label "ver-${{ github.sha }}" \
                 --description "commit-sha-${{ github.sha }}"

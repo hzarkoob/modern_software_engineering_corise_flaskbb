@@ -43,7 +43,7 @@ jobs:
           git config --global user.email 'noreply@modern_soft_eng.com'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
           git commit -am 'Correction: terraform fmt'
-          got push
+          git push
 
         # CoRise TODO: run the format command fail the build or on pull-requests update the PR with formatted data
   

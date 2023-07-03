@@ -36,6 +36,7 @@ jobs:
         continue-on-error: ${{github.event_name == 'pull_request'}}
         
       - name: Apply corrections
+        if: ${{ steps.fmt.outcome == 'failure' && github.event_name == 'pull_request' }}
         working-directory: ./terraform
         run: |
           terraform fmt

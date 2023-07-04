@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           # This is required or we end up in detached head state & thus cannot push any changes.
-          ref: ${{ github.head_ref }}
+          # ref: ${{ github.head_ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
       # Download & set up the terraform CLI.
       - name: Set up terraform CLI

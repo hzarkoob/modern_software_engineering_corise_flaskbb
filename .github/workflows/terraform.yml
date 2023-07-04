@@ -25,6 +25,7 @@ jobs:
         with:
           # This is required or we end up in detached head state & thus cannot push any changes.
           ref: ${{ github.head_ref }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       # Download & set up the terraform CLI.
       - name: Set up terraform CLI
         uses: hashicorp/setup-terraform@v1
@@ -42,7 +43,7 @@ jobs:
           terraform fmt
           git config --global user.name 'terraform-github-actions'
           git config --global user.email 'noreply@modern_soft_eng.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          # git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
           git commit -am 'Correction: terraform fmt'
           git push
 

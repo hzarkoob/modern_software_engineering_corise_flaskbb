@@ -2,7 +2,7 @@ resource "aws_elastic_beanstalk_application" "application" {
   name = "hzarkoob_flaskbb"
 }
 # CoRise TODO: change cname_prefix to reflect your unique application name
-# test PR 4
+# test PR 5
 resource "aws_elastic_beanstalk_environment" "environment" {
   name                = "flaskbb-environment"
   cname_prefix        = "hzarkoobflaskbb"
@@ -11,6 +11,6 @@ resource "aws_elastic_beanstalk_environment" "environment" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "IamInstanceProfile"
-    value     = "aws-elasticbeanstalk-ec2-role"
+      value     = "aws-elasticbeanstalk-ec2-role"
   }
 }

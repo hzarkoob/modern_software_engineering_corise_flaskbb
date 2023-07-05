@@ -43,10 +43,8 @@ jobs:
           terraform fmt
           git config --global user.name 'x-access-token'
           git config --global user.email 'noreply@modern_soft_eng.com'
-          echo hi
-          echo https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-          echo hi
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git remote -v
           git commit -am 'Correction: terraform fmt'
           git push
 

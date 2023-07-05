@@ -13,11 +13,16 @@ jobs:
         runs-on: ubuntu-latest
         if: ${{ github.event.workflow_run.conclusion == 'success' }} # Only when test completed successfully 
         steps:
-          - name: Download latest build
-            uses: actions/download-artifact@v3
-            with: 
-              name: 'flaskbb_application_artifact'
+          # - name: Download latest build
+          #   uses: actions/download-artifact@v3
+          #   with: 
+          #     name: 'flaskbb_application_artifact'
 
+          - uses: actions/checkout@v2
+          
+          - name: Build binary distribution
+            run: zip -r "flaskbb_deploy-${{github.sha}}.zip" ./flaskbb ./.ebextensions wsgi.py setup.py setup.cfg requirements.txt flaskbb.cfg celery_worker.py
+        
           - name: Congifure AWS Credentials
             uses: aws-actions/configure-aws-credentials@v2
             with:

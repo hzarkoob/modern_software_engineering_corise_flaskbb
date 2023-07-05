@@ -14,12 +14,12 @@ on:
         branches: [ main ]
         paths:
             - 'terraform/*'
-            - '.github/workflows/terraform.yaml'
+            - '.github/workflows/terraform.yml'
     pull_request:
         branches: [ main ]
         paths:
             - 'terraform/*'
-            - '.github/workflows/terraform.yaml'
+            - '.github/workflows/terraform.yml'
 
 jobs:
   format:
@@ -30,7 +30,7 @@ jobs:
     steps:
       # Clone the repository.
       - name: test
-        run: echo Hello!
+        run: echo Hello!!!
 
       - uses: actions/checkout@v2
         with:

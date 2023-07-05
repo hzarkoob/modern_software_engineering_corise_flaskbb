@@ -15,6 +15,7 @@ on:
         paths:
             - 'terraform/*'
             - '.github/workflows/terraform.yaml'
+            - '.github/workflows/terraform1.yaml'
     pull_request:
         branches: [ main ]
         paths:

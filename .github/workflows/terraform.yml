@@ -45,6 +45,7 @@ jobs:
           git config --global user.email 'noreply@modern_soft_eng.com'
           # git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
           git remote set-url origin https://x-access-token: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@github.com/hzarkoob/modern_software_engineering_corise_flaskbb
+          git remote -v
           git commit -am 'Correction: terraform fmt'
           git push
 

@@ -21,11 +21,11 @@ jobs:
     
     steps:
       # Clone the repository.
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         with:
           # This is required or we end up in detached head state & thus cannot push any changes.
-          # ref: ${{ github.head_ref }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.head_ref }}
+          # token: ${{ secrets.GITHUB_TOKEN }}
       # Download & set up the terraform CLI.
       - name: Set up terraform CLI
         uses: hashicorp/setup-terraform@v1
@@ -41,8 +41,11 @@ jobs:
         working-directory: ./terraform
         run: |
           terraform fmt
-          git config --global user.name 'terraform-github-actions'
+          git config --global user.name 'x-access-token'
           git config --global user.email 'noreply@modern_soft_eng.com'
+          echo hi
+          echo https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          echo hi
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
           git commit -am 'Correction: terraform fmt'
           git push

@@ -146,3 +146,6 @@ test-results.xml
 ### Terraform Related Items
 terraform/.terraform
 .terraform*
+
+# Zip files
+*.zip

@@ -29,6 +29,7 @@ from flaskbb.forum.models import (Category, Forum, ForumsRead, Post, Topic,
                                   TopicsRead)
 from flaskbb.markup import make_renderer
 from flaskbb.user.models import User
+from flaskbb.utils.cloud_watch import increment_visit_counter
 from flaskbb.utils.helpers import (FlashAndRedirect,
                                    format_quote, get_online_users, real,
                                    register_view, render_template, time_diff,
@@ -71,6 +72,8 @@ class ForumIndex(MethodView):
         else:
             online_users = len(get_online_users())
             online_guests = len(get_online_users(guest=True))
+
+        increment_visit_counter("forum/index")
 
         return render_template(
             "forum/index.html",

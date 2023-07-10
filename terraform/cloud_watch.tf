@@ -27,6 +27,7 @@ resource "aws_cloudwatch_dashboard" "flaskbb_main" {
             "region" : "us-west-1",
             "start" : "-PT1H",
             "end" : "P0D",
+            "stat" : "Sum",
             "title" : "Visitor Counts"
           }
         },

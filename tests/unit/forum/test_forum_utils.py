@@ -4,7 +4,7 @@ from flaskbb.forum import utils
 from flaskbb.forum.models import Forum
 from flaskbb.user.models import Group
 
-# test3
+# test4
 
 class TestForceLoginHelpers(object):
     def test_would_not_force_login_for_authed_user(self, user, forum):

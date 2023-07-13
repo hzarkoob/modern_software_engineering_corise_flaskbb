@@ -1,11 +1,6 @@
 import pytest
 from flaskbb.forum import forms
 from werkzeug.datastructures import MultiDict
-# wsl-8
-# wsl0
-# wsl
-# wsl test
-# wsl ide local test2
 
 pytestmark = pytest.mark.usefixtures("post_request_context", "default_settings")
 
@@ -18,5 +13,3 @@ class TestSpecialTopicForm(object):
     pass
 
 ###################################################################
-
-# test2

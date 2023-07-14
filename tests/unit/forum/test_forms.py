@@ -1,5 +1,5 @@
-from flaskbb.forum import forms
 import pytest
+from flaskbb.forum import forms
 from werkzeug.datastructures import MultiDict
 
 pytestmark = pytest.mark.usefixtures("post_request_context", "default_settings")
@@ -16,3 +16,4 @@ class TestSpecialTopicForm(object):
         form = forms.SpecialTopicForm(formdata=data)
 
         assert form.data.get("content") == "Special Topic: my content"        
+

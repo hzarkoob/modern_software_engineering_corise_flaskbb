@@ -16,5 +16,3 @@ class TestSpecialTopicForm(object):
         form = forms.SpecialTopicForm(formdata=data)
 
         assert form.data.get("content") == "Special Topic: my content"
-
-# test week3        

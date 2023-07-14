@@ -1,14 +1,8 @@
-import pytest
 from flaskbb.forum import forms
+import pytest
 from werkzeug.datastructures import MultiDict
 
 pytestmark = pytest.mark.usefixtures("post_request_context", "default_settings")
-
-# t1
-
-###################################################################
-# CoRise TODO: add unit tests below that test the functionality of
-# the `SpecialTopicForm`
 
 class TestSpecialTopicForm(object):
     def test_special_topic_title(self):
@@ -23,4 +17,4 @@ class TestSpecialTopicForm(object):
 
         assert form.data.get("content") == "Special Topic: my content"
 
-###################################################################
+        

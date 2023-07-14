@@ -276,8 +276,6 @@ class TestChangeUserDetailsView(object):
         view.get()
 
     def test_update_user_details_successfully_updates(self, user, mocker):
-        # CoRise TODO: fix this test so that it passes.
-        # Hint: does the format of the data look right to you?
         form = self.produce_form(
             birthday="2000-04-25",
             gender="awesome",
@@ -319,7 +317,6 @@ class TestChangeUserDetailsView(object):
         assert form.errors == {"birthday": ["Not a valid date value."]}
 
     def test_update_user_fails_with_stopvalidation(self, mocker):
-        # CoRise TODO: fix this test so that it passes.
         form = self.produce_form(birthday="2000-04-25")
         handler = mocker.Mock(spec=ChangeSetHandler)
         handler.apply_changeset.side_effect = StopValidation(
@@ -334,7 +331,6 @@ class TestChangeUserDetailsView(object):
         }
 
     def test_update_user_fails_with_persistence_error(self, mocker):
-        # CoRise TODO: fix this this test so that it passes.
         form = self.produce_form(birthday="2000-04-25")
         handler = mocker.Mock(spec=ChangeSetHandler)
         handler.apply_changeset.side_effect = PersistenceError("no")

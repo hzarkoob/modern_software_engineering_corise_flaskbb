@@ -12,21 +12,19 @@ from flaskbb.utils.helpers import (
     slugify,
     time_utcnow,
     topic_is_unread,
-        to_bytes,
+    to_bytes,
     to_unicode,
     redirect_url   
 )
 from flaskbb.utils.settings import flaskbb_config
 
-###################################################################
-# CoRise TODO: add unit tests below that test the functionality of:
-# - to_bytes
-# - to_unicode
-# - redirect_url
-# functions defined in `flaskbb/util/helpers.py`
-# NOTE: You'll need to import them from flaskbb.utils.helpers
 
-# ADD CODE HERE
+def test_slugify():
+    """Test the slugify helper method."""
+    assert slugify(u"Hello world") == u"hello-world"
+
+    assert slugify(u"¿Cómo está?") == u"como-esta"
+
 
 def test_to_unicode_and_back():
     """Test the unicode conversion code"""
@@ -41,14 +39,6 @@ def test_redirect_url_to_unsafe_site():
 def test_redirect_url_with_referrer(application):
     with application.test_request_context("/redirect"):
         assert redirect_url("next_page",use_referrer=True) == "next_page"
-
-###################################################################
-
-def test_slugify():
-    """Test the slugify helper method."""
-    assert slugify(u"Hello world") == u"hello-world"
-
-    assert slugify(u"¿Cómo está?") == u"como-esta"
 
 
 def test_forum_is_unread(guest, user, forum, topic, forumsread):
@@ -202,3 +192,4 @@ def test_check_image_just_right(image_just_right, default_settings, responses):
 
     result = check_image(image_just_right.url)
     assert result[1]
+    

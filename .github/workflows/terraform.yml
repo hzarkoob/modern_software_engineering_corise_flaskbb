@@ -1,0 +1,117 @@
+# This workflow will provision the infrastructure necessary to deploy our application.
+
+name: terraform
+
+permissions:
+  contents: write
+
+
+# Comment only
+
+
+on:
+    push:
+        branches: [ main ]
+        paths:
+            - 'terraform/*'
+            - '.github/workflows/terraform.yml'
+    pull_request:
+        branches: [ main ]
+        paths:
+            - 'terraform/*'
+            - '.github/workflows/terraform.yml'
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    name: Format
+    
+    steps:
+      # Clone the repository.
+      - name: test
+        run: echo Hello!!!
+
+      - uses: actions/checkout@v2
+        with:
+          # This is required or we end up in detached head state & thus cannot push any changes.
+          ref: ${{ github.head_ref }}
+          # token: ${{ secrets.GITHUB_TOKEN }}
+      # Download & set up the terraform CLI.
+      - name: Set up terraform CLI
+        uses: hashicorp/setup-terraform@v1
+        
+      - name: Check format only. No edits made.
+        working-directory: ./terraform
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: ${{github.event_name == 'pull_request'}}
+        
+      - name: Apply corrections
+        if: ${{ steps.fmt.outcome == 'failure' && github.event_name == 'pull_request' }}
+        working-directory: ./terraform
+        run: |
+          terraform fmt
+          git config --global user.name 'x-access-token'
+          git config --global user.email 'noreply@modern_soft_eng.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git remote -v
+          git commit -am 'Correction: terraform fmt'
+          git push
+
+        # CoRise TODO: run the format command fail the build or on pull-requests update the PR with formatted data
+  
+  terraform:
+
+    runs-on: ubuntu-latest
+
+    name: Validate, Plan, and Apply
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.TERRAFORM_AWS_SECRET_ACCESS_KEY }}
+    
+    steps:
+      - uses: actions/checkout@v2
+
+      # Download & set up the terraform CLI.
+      - name: Set up terraform CLI
+        uses: hashicorp/setup-terraform@v1
+      
+      # Initialize terraform.
+      - name: terraform init
+        working-directory: ./terraform
+        id: init
+        run: terraform init -input=false
+
+      # CoRise TODO: Validate the terraform plan (if on a PR branch).
+      - name: terraform validate
+        working-directory: ./terraform
+        run: terraform validate -no-color
+        if: ${{ github.event_name == 'pull_request' }}
+
+      # CoRise TODO: Prepare the terraform plan (if on a PR branch).
+      - name: terraform plan
+        id: plan
+        working-directory: ./terraform
+        run: terraform plan -no-color -input=false
+        if: ${{ github.event_name == 'pull_request' }}
+        continue-on-error: true
+
+      # CoRise TODO: Fail the job if the plan failed
+      - name: pass or fail
+        uses: actions/github-script@v6
+        if: ${{ steps.plan.outcome == 'failure'}}
+        with:
+          script: |
+            core.setFailed('Plan failed!')
+      # CoRise TODO: Apply the generated plan (after merging).
+
+      - name: terraform apply
+        id: apply
+        working-directory: ./terraform
+        if: ${{github.event_name == 'push' && github.ref == 'refs/heads/main'}}
+        run: terraform apply -auto-approve -input=false
+
+
+
+

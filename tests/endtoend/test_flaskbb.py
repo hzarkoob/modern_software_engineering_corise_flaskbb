@@ -10,13 +10,7 @@ from playwright.sync_api import Page, expect
 
 os.environ['FLASK_ENV'] = 'development'
 
-###################################################################
-# CoRise TODO: add a new fixture `translations` that calls the
-# `compile_translations` function from flaskbb.utils.translations
-
-# ADD CODE HERE
-
-@pytest.fixture(scope="session")
+@pytest.fixture
 def app():
     """application with context."""
     app = create_app(Config)
@@ -29,10 +23,11 @@ def app():
 
     return app
 
-def test_load_home_page(live_server, page: Page):
+def test_create_new_account(live_server, page: Page):    
     url=url_for('forum.index', _external=True)
 
     page.goto(url)
     expect(page).to_have_title("FlaskBB - A lightweight forum software in Flask")
+    
 
-###################################################################
+    

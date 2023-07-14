@@ -14,10 +14,20 @@ on:
       - '**/CHANGES'
       - '**/AUTHORS'
       - '**/LICENSE'
-
-###################################################################
-# CoRise TODO: fill in the steps to install dependencies, run tests 
-# with pytest, and upload the code coverage report.
+      - 'terraform/**'
+      - .github/workflows/terraform.yml
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - 'docs/**'
+      - 'flaskbb/themes/**'
+      - '**.md'
+      - '**.rst'
+      - '**/CHANGES'
+      - '**/AUTHORS'
+      - '**/LICENSE'
+      - 'terraform/**'
+      - .github/workflows/terraform.yml
 
 jobs:
   build:
@@ -25,13 +35,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.10]
+        python-version: ["3.10"]
 
     steps:
     - uses: actions/checkout@v2
     
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
         
@@ -51,21 +61,38 @@ jobs:
         pip install wheel
         pip install -r requirements-dev.txt
         pip install -e .
-        playwrite install
-        playwrite install-deps
+        playwright install
+        playwright install-deps
 
     - name: Prepare FlaskBB
       run: |
         flaskbb translations compile
+    
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings.
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
         
     - name: Test with pytest
       run: |
         pytest --cov=./ --cov-report=html
         
-    - name: Upload coverage
+    - name: Upload code coverage results
       uses: actions/upload-artifact@v3
       with:
         name: code coverage report
         path: tests/htmlcov/
-      
-###################################################################
+
+    - name: Build binary distribution and upload to artifactory
+      if: ${{ github.event_name == 'push' }}
+      run: zip -r "flaskbb_deploy-${{github.sha}}.zip" ./flaskbb ./.ebextensions wsgi.py setup.py setup.cfg requirements.txt flaskbb.cfg celery_worker.py
+
+    - name: Upload
+      if: ${{ github.event_name == 'push' }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: flaskbb_application_artifact
+        path: flaskbb_deploy-${{github.sha}}.zip 
+       

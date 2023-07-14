@@ -142,3 +142,10 @@ node_modules
 .DS_Store
 .pytest_cache
 test-results.xml
+
+### Terraform Related Items
+terraform/.terraform
+.terraform*
+
+### Application zips
+flaskbb_deploy-*.zip

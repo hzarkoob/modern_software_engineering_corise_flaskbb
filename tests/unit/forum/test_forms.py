@@ -15,6 +15,4 @@ class TestSpecialTopicForm(object):
         data = MultiDict({"title": "my topic", "content": "my content", "track_topic":False})
         form = forms.SpecialTopicForm(formdata=data)
 
-        assert form.data.get("content") == "Special Topic: my content"
-
-        
+        assert form.data.get("content") == "Special Topic: my content"        

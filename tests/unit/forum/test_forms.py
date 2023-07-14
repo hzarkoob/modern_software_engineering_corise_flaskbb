@@ -2,8 +2,6 @@ from flaskbb.forum import forms
 import pytest
 from werkzeug.datastructures import MultiDict
 
-# testtt
-
 pytestmark = pytest.mark.usefixtures("post_request_context", "default_settings")
 
 class TestSpecialTopicForm(object):

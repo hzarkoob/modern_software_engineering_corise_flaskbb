@@ -4,7 +4,7 @@ resource "aws_cloudwatch_log_group" "flaskbb_app" {
   retention_in_days = 3
 }
 
-# test terraform0
+# test terraform1
 
 #CoRise TODO: create a new dashboard
 resource "aws_cloudwatch_dashboard" "flaskbb_main" {
@@ -63,7 +63,7 @@ resource "aws_cloudwatch_dashboard" "flaskbb_main" {
               ["AWS/ElasticBeanstalk", "ApplicationRequests5xx", "EnvironmentName", "flaskbb-environment", { "region" : "us-west-1" }]
             ],
             "region" : "us-west-1",
-            "period" : 300,
+            "period" : 400,
             "title" : "ApplicationRequests"
           }
         },

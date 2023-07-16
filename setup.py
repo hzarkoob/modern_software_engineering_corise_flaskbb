@@ -4,7 +4,7 @@ import os
 
 from setuptools import setup
 
-# test code1
+# test code2
 
 install_requires = [
     "alembic>=1.6.5",

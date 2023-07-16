@@ -4,8 +4,6 @@ resource "aws_cloudwatch_log_group" "flaskbb_app" {
   retention_in_days = 3
 }
 
-# test terraform1
-
 #CoRise TODO: create a new dashboard
 resource "aws_cloudwatch_dashboard" "flaskbb_main" {
   dashboard_name = "flaskbb_main"

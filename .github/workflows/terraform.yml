@@ -2,31 +2,44 @@
 
 name: terraform
 
+permissions:
+  contents: write
+
+
+# Comment only
+
+
 on:
     push:
         branches: [ main ]
         paths:
             - 'terraform/*'
-            - '.github/workflows/terraform.yaml'
+            - '.github/workflows/terraform.yml'
     pull_request:
         branches: [ main ]
         paths:
             - 'terraform/*'
-            - '.github/workflows/terraform.yaml'
+            - '.github/workflows/terraform.yml'
+
 jobs:
   format:
     permissions:
       contents: write
+
     runs-on: ubuntu-latest
 
     name: Format
     
     steps:
       # Clone the repository.
+      - name: test
+        run: echo Hello!!!
+
       - uses: actions/checkout@v2
         with:
           # This is required or we end up in detached head state & thus cannot push any changes.
           ref: ${{ github.head_ref }}
+          # token: ${{ secrets.GITHUB_TOKEN }}
       # Download & set up the terraform CLI.
       - name: Set up terraform CLI
         uses: hashicorp/setup-terraform@v1
@@ -46,6 +59,7 @@ jobs:
           git commit -am "fixup: terraform fmt"
           git push
         working-directory: ./terraform
+
   terraform:
 
     runs-on: ubuntu-latest
@@ -57,34 +71,41 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
+
       # Download & set up the terraform CLI.
       - name: Set up terraform CLI
         uses: hashicorp/setup-terraform@v1
+      
       # Initialize terraform.
       - name: terraform init
         working-directory: ./terraform
         id: init
         run: terraform init -input=false
+        
       - name: terraform validate
         working-directory: ./terraform
         if: ${{ github.event_name == 'pull_request' }}
         run: terraform validate -no-color
+
       - name: terraform plan
-        working-directory: ./terraform
         id: plan
+        working-directory: ./terraform
         if: ${{ github.event_name == 'pull_request' }}
         run: terraform plan -no-color -input=false
         continue-on-error: true
+        
       - name: pass or fail
         uses: actions/github-script@v6
         if: ${{ steps.plan.outcome == 'failure' }}
         with:
           script: |
             core.setFailed('Plan failed!')
+            
       - name: terraform apply
         id: apply
         working-directory: ./terraform
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+
         run: terraform apply -auto-approve -input=false
 
 

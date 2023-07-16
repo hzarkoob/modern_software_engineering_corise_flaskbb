@@ -28,6 +28,3 @@ def test_create_new_account(live_server, page: Page):
 
     page.goto(url)
     expect(page).to_have_title("FlaskBB - A lightweight forum software in Flask")
-    
-
-    

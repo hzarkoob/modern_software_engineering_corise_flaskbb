@@ -147,5 +147,5 @@ test-results.xml
 terraform/.terraform
 .terraform*
 
-# Zip files
-*.zip
+### Application zips
+flaskbb_deploy-*.zip

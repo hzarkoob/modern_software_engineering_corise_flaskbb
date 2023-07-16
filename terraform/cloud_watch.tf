@@ -63,7 +63,7 @@ resource "aws_cloudwatch_dashboard" "flaskbb_main" {
               ["AWS/ElasticBeanstalk", "ApplicationRequests5xx", "EnvironmentName", "flaskbb-environment", { "region" : "us-west-1" }]
             ],
             "region" : "us-west-1",
-            "period" : 360,
+            "period" : 300,
             "title" : "ApplicationRequests"
           }
         },

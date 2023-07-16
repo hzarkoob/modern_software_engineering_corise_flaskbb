@@ -4,6 +4,8 @@ import os
 
 from setuptools import setup
 
+# test code0
+
 install_requires = [
     "alembic>=1.6.5",
     "amqp>=5.0.6",

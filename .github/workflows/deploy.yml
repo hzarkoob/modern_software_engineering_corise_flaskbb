@@ -39,11 +39,8 @@ jobs:
             run: |  # CoRise TODO filling the name of the aprlication file and the name of the bucket you created
               aws elasticbeanstalk create-application-version \
               --application-name hzarkoob_flaskbb \
-              # --source-bundle S3Bucket="hzarkoob-flaskbb",S3Key="flaskbb_deploy-${{github.sha}}.zip" \
               --source-bundle S3Bucket="hzarkoob-flaskbb",S3Key="flaskbb_deploy-v1.zip" \
-              # --version-label "ver-${{ github.sha }}" \
               --version-label "ver-v1" \
-              # --description "commit-sha-${{ github.sha }}" \
               --description "commit-v1"
 
           # CoRise TODO fill in your_environment_name based on the environment created in terraform workflow

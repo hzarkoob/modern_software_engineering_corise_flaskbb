@@ -2,8 +2,6 @@ resource "aws_elastic_beanstalk_application" "application" {
   name = "hzarkoob_flaskbb"
 }
 
-#
-
 resource "aws_elastic_beanstalk_environment" "environment" {
   name                = "flaskbb-environment"
   cname_prefix        = "hzarkoobflaskbb"

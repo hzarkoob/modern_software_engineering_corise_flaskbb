@@ -16,7 +16,7 @@ def increment_visit_counter(page_name):
                         'Value': 1.0         
                     },     
                 ],     
-                Namespace='flaskbb_custom_metrics' )
+                Namespace='flaskbb_custom_metrics')
         except Exception as e:
             logging.warn("Failed to send metrics to AWS", exc_info=e)
     

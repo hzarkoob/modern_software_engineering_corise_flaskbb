@@ -4,6 +4,8 @@ import os
 
 from setuptools import setup
 
+# test code0-0
+
 install_requires = [
     "alembic>=1.6.5",
     "amqp>=5.0.6",
@@ -11,6 +13,7 @@ install_requires = [
     "Babel>=2.9.1",
     "billiard>=3.6.4.0",
     "blinker>=1.4",
+    "boto3>=1.26.165",
     "celery>=5.1.2",
     "certifi>=2021.5.30",
     "charset-normalizer>=2.0.3",
@@ -63,6 +66,7 @@ install_requires = [
     "Unidecode>=1.2.0",
     "urllib3>=1.26.6",
     "vine>=5.0.0",
+    "watchtower>=3.0.1",
     "wcwidth>=0.2.5",
     "Werkzeug>=2.0.1",
     "Whoosh>=2.7.4",

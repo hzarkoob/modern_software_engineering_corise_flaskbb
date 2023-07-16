@@ -22,7 +22,7 @@ jobs:
           
           - name: Build binary distribution
             # run: zip -r "flaskbb_deploy-${{github.sha}}.zip" ./flaskbb ./.ebextensions wsgi.py setup.py setup.cfg requirements.txt flaskbb.cfg celery_worker.py
-            run: zip -r "flaskbb_deploy-v1.zip" ./flaskbb ./.ebextensions wsgi.py setup.py setup.cfg requirements.txt flaskbb.cfg celery_worker.py
+            run: zip -r "flaskbb_deploy-v2.zip" ./flaskbb ./.ebextensions wsgi.py setup.py setup.cfg requirements.txt flaskbb.cfg celery_worker.py
         
           - name: Congifure AWS Credentials
             uses: aws-actions/configure-aws-credentials@v2
@@ -33,17 +33,17 @@ jobs:
 
           - name: Upload application file to AWS
             # run: aws s3 cp flaskbb_deploy-${{github.sha}}.zip s3://hzarkoob-flaskbb # CoRise TODO filling the name of the application file and the name of the bucket you created
-            run: aws s3 cp flaskbb_deploy-v1.zip s3://hzarkoob-flaskbb # CoRise TODO filling the name of the application file and the name of the bucket you created
+            run: aws s3 cp flaskbb_deploy-v2.zip s3://hzarkoob-flaskbb # CoRise TODO filling the name of the application file and the name of the bucket you created
 
           - name: Create new application version
             run: |  # CoRise TODO filling the name of the aprlication file and the name of the bucket you created
               aws elasticbeanstalk create-application-version \
               --application-name hzarkoob_flaskbb \
-              --source-bundle S3Bucket="hzarkoob-flaskbb",S3Key="flaskbb_deploy-v1.zip" \
-              --version-label "ver-v1" \
-              --description "commit-v1"
+              --source-bundle S3Bucket="hzarkoob-flaskbb",S3Key="flaskbb_deploy-v2.zip" \
+              --version-label "ver-v2" \
+              --description "commit-v2"
 
           # CoRise TODO fill in your_environment_name based on the environment created in terraform workflow
           - name: Deploy application
             # run: aws elasticbeanstalk update-environment --environment-name flaskbb-environment --version-label "ver-${{ github.sha }}"
-            run: aws elasticbeanstalk update-environment --environment-name flaskbb-environment --version-label "ver-v1"
+            run: aws elasticbeanstalk update-environment --environment-name flaskbb-environment --version-label "ver-v2"

@@ -77,8 +77,8 @@ jobs:
         
     - name: Test with pytest
       run: |
-        # pytest --cov=./ --cov-report=html
-        pytest tests/unit/forum/test_forms.py
+        pytest --cov=./ --cov-report=html
+        # pytest tests/unit/forum/test_forms.py # For simplicity.
         
     - name: Upload code coverage results
       uses: actions/upload-artifact@v3

@@ -1,7 +1,6 @@
 # This workflow will provision the infrastructure necessary to deploy our application.
 
 name: terraform
-# week4
 
 permissions:
   contents: write

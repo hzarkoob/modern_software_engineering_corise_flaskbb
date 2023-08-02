@@ -78,10 +78,22 @@ jobs:
     - name: Test with pytest
       run: |
         pytest --cov=./ --cov-report=html
+        # pytest tests/unit/forum/test_forms.py # For simplicity.
         
     - name: Upload code coverage results
       uses: actions/upload-artifact@v3
       with:
         name: code coverage report
         path: tests/htmlcov/
+
+    - name: Build binary distribution and upload to artifactory
+      if: ${{ github.event_name == 'push' }}
+      run: zip -r "flaskbb_deploy-${{github.sha}}.zip" ./flaskbb ./.ebextensions wsgi.py setup.py setup.cfg requirements.txt flaskbb.cfg celery_worker.py
+
+    - name: Upload
+      if: ${{ github.event_name == 'push' }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: flaskbb_application_artifact
+        path: flaskbb_deploy-${{github.sha}}.zip 
        
